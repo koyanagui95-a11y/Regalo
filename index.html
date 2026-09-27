@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <div id="lock-screen" class="lock-screen">
+    <div class="lock-box">
+      <div class="lock-icon">🔒</div>
+      <h2>Ingresa el código</h2>
+      <p class="lock-sub">Solo números</p>
+      <div class="code-slots" id="codeSlots">
+        <span class="slot"></span>
+        <span class="slot"></span>
+        <span class="slot"></span>
+        <span class="slot"></span>
+        <span class="slot"></span>
+        <span class="slot"></span>
+      </div>
+      <div class="keypad" id="keypad">
+        <button class="key" data-key="1">1</button>
+        <button class="key" data-key="2">2</button>
+        <button class="key" data-key="3">3</button>
+        <button class="key" data-key="4">4</button>
+        <button class="key" data-key="5">5</button>
+        <button class="key" data-key="6">6</button>
+        <button class="key" data-key="7">7</button>
+        <button class="key" data-key="8">8</button>
+        <button class="key" data-key="9">9</button>
+        <button class="key key-empty" disabled></button>
+        <button class="key" data-key="0">0</button>
+        <button class="key key-del" id="keyDel">⌫</button>
+      </div>
+      <p class="lock-msg" id="lockMsg"></p>
+    </div>
+  </div>
+
+  <div id="main-site" class="main-site hidden">
+    <header class="main-header">
+      <nav class="nav-links">
+        <a href="#inicio" class="nav-btn active">Inicio</a>
+        <a href="#musica" class="nav-btn">Música</a>
+        <a href="#mensaje" class="nav-btn">Mensaje</a>
+      </nav>
+      <button id="music-btn" class="music-icon-btn" title="Silenciar / Activar sonido">🎵</button>
+    </header>
+
+    <section id="inicio" class="page-section section-3d">
+      <div id="canvas-container"></div>
+      <div class="photos-orbit" id="photosOrbit"></div>
+    </section>
+
+    <section id="musica" class="page-section section-full">
+      <div class="music-container">
+
+        <div class="player-card">
+          <div class="album-cover">
+            <img id="current-cover" src="https://picsum.photos/400/400?random=1" alt="Portada de la Canción">
+          </div>
+          <div class="song-info">
+            <h2 id="current-title">No Me Doy Por Vencida 💪</h2>
+            <p id="current-artist">Nunca te rindas</p>
+          </div>
+
+          <div class="progress-container">
+            <span id="time-current">0:00</span>
+            <div class="progress-bar-bg" id="progress-bar">
+              <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+            <span id="time-duration">3:30</span>
+          </div>
+
+          <div class="player-controls">
+            <button id="prev-btn" class="ctrl-btn">⏮</button>
+            <button id="play-btn" class="ctrl-btn play-main">▶</button>
+            <button id="next-btn" class="ctrl-btn">⏭</button>
+          </div>
+        </div>
+
+        <div class="playlist-card">
+          <div class="playlist-header">
+            <h2>🎵 Para Ti</h2>
+            <p>Cinco canciones para recordarte lo increíble que eres:</p>
+          </div>
+          <ul class="song-list">
+            <li class="song-item active" data-index="0" data-color="#00f5d4" data-src="musicas/musica1.mp3" data-cover="https://picsum.photos/400/400?random=1" data-title="No Me Doy Por Vencida 💪" data-artist="Nunca te rindas">
+              <span class="song-title">1. No Me Doy Por Vencida 💪</span>
+            </li>
+            <li class="song-item" data-index="1" data-color="#a855f7" data-src="musicas/musica2.mp3" data-cover="https://picsum.photos/400/400?random=2" data-title="Color Esperanza 🌈" data-artist="Jamás pierdas la fe">
+              <span class="song-title">2. Color Esperanza 🌈</span>
+            </li>
+            <li class="song-item" data-index="2" data-color="#ec4899" data-src="musicas/musica3.mp3" data-cover="https://picsum.photos/400/400?random=3" data-title="Resistiré 🔥" data-artist="Eres más fuerte que cualquier tormenta">
+              <span class="song-title">3. Resistiré 🔥</span>
+            </li>
+            <li class="song-item" data-index="3" data-color="#fbbf24" data-src="musicas/musica4.mp3" data-cover="https://picsum.photos/400/400?random=4" data-title="A Contracorriente 🌊" data-artist="Sigue tu camino sin miedo">
+              <span class="song-title">4. A Contracorriente 🌊</span>
+            </li>
+            <li class="song-item" data-index="4" data-color="#f43f5e" data-src="musicas/musica5.mp3" data-cover="https://picsum.photos/400/400?random=5" data-title="Mujer de las Mil Batallas 💖" data-artist="Admiro a la guerrera que llevas dentro">
+              <span class="song-title">5. Mujer de las Mil Batallas 💖</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="mensaje" class="page-section section-full message-bg">
+      <div class="message-wrapper">
+        <div class="message-card">
+          <div class="message-icon">💌</div>
+          <h2>Un Mensaje Especial para Ti</h2>
+          <div class="message-body">
+            <p>Hoy no se trata solo de celebrar la fecha en que llegastes al mundo, sino en la persona en la que te has convertido con cada caída, aprendizaje</p>
+            <p>              y momento vivido. Cumplir años no es solo contar el tiempo, sino valorar todo lo que ese tiempo nos ha enseñado.</p>
+            <p>Que nunca olvides lo increíble que eres: capaz de levantarte tras cada caída, de sonreír incluso en los días difíciles y de contagiar luz a quienes te rodean.</p>
+            <p class="highlight-text">✨ Nunca te rindas, porque tienes todo para lograrlo. Y yo estaré aquí, a tu lado, siempre. ✨</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="modal-card" class="modal-overlay">
+      <div class="modal-content">
+        <span class="close-modal" id="close-card">&times;</span>
+        <h2 id="card-title">Título del Recuerdo</h2>
+        <p id="card-text">Descripción especial para este cuadro/foto.</p>
+      </div>
+    </div>
+
+    <audio id="bg-music" src="musicas/musica1.mp3"></audio>
+    <audio id="fondo-music" src="musicas/fondo1.mp3"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
